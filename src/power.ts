@@ -38,4 +38,4 @@ export const footPoundalsPerSecond: Measure<Power> = Measure.derived(Power, Ener
 export const stheneMetresPerSecond: Measure<Power> = Measure.derived(Power, Energy.stheneMetres.value / Time.seconds.value);
 export const ergsPerSecond: Measure<Power> = Measure.derived(Power, Energy.ergs.value / Time.seconds.value);
 
-export const imperialHorsepower: Measure<Power> = Measure.derived(Power, 550 * footPoundsForcePerSecond.value / Time.seconds.value);
+export const imperialHorsepower: Measure<Power> = Measure.derived(Power, 550 * footPoundsForcePerSecond.value);
