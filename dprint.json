@@ -1,0 +1,14 @@
+{
+    "typescript": {
+        "indentWidth": 4,
+        "lineWidth": 200,
+        "newLineKind": "lf",
+        "useTabs": false,
+
+        "bracePosition": "nextLine",
+        "preferHanging": false,
+    },
+
+    "excludes": [ "**/*.min.*", "**/*.vendor.*", "**/*.lock" ],
+    "plugins": [ "https://plugins.dprint.dev/typescript-0.95.15.wasm" ]
+}

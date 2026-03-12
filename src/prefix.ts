@@ -1,0 +1,25 @@
+export const deci = 1e-1;
+export const centi = 1e-2;
+export const milli = 1e-3;
+export const micro = 1e-6;
+export const nano = 1e-9;
+export const pico = 1e-12;
+export const femto = 1e-15;
+export const atto = 1e-18;
+export const zepto = 1e-21;
+export const yocto = 1e-24;
+export const ronto = 1e-27;
+export const quecto = 1e-30;
+
+export const deca = 1e+1;
+export const hecto = 1e+2;
+export const kilo = 1e+3;
+export const mega = 1e+6;
+export const giga = 1e+9;
+export const tera = 1e+12;
+export const peta = 1e+15;
+export const exa = 1e+18;
+export const zetta = 1e+21;
+export const yotta = 1e+24;
+export const ronna = 1e+27;
+export const quetta = 1e+30;
