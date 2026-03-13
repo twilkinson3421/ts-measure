@@ -1,24 +1,34 @@
-import type { Quantity } from "./quantity.ts";
+export interface Dimension<
+    TName extends string = string,
+    TBaseUnit extends string = string,
+>
+{
+    readonly name: TName;
+    readonly baseUnit: TBaseUnit;
+}
 
-export interface Measure<T extends string = string>
+type UnitValueToBaseValue = (unitValue: number) => number;
+type BaseValueToUnitValue = (baseValue: number) => number;
+
+export interface Measure<T extends Dimension = Dimension>
 {
     (units: number): Measure<T>;
 
-    readonly value: number;
-    readonly quantity: Quantity<T>;
+    readonly quantity: T;
+    readonly valueInBaseUnits: number;
 
-    unitToBase(unitValue: number): number;
-    baseToUnit(baseValue: number): number;
+    readonly unitValueToBaseValue: UnitValueToBaseValue;
+    readonly baseValueToUnitValue: BaseValueToUnitValue;
 
     to(unit: Measure<T>): number;
 }
 
 export namespace Measure
 {
-    export function custom<const T extends string>(
-        quantity: Quantity<T>,
-        unitToBase: (unitValue: number) => number,
-        baseToUnit: (baseValue: number) => number,
+    export function custom<const T extends Dimension>(
+        quantity: T,
+        unitValueToBaseValue: UnitValueToBaseValue,
+        baseValueToUnitValue: BaseValueToUnitValue,
     ): Measure<NoInfer<T>>
     {
         return Object.freeze(Object.assign(
@@ -26,26 +36,26 @@ export namespace Measure
             {
                 return custom<T>(
                     quantity,
-                    (unitValue) => unitToBase(units * unitValue),
-                    (baseValue) => baseToUnit(baseValue) / units,
+                    (unitValue) => unitValueToBaseValue(units * unitValue),
+                    (baseValue) => baseValueToUnitValue(baseValue) / units,
                 );
             },
             {
-                value: unitToBase(1),
                 quantity,
+                valueInBaseUnits: unitValueToBaseValue(1),
 
-                unitToBase,
-                baseToUnit,
+                unitValueToBaseValue,
+                baseValueToUnitValue,
 
                 to(unit: Measure<T>): number
                 {
-                    return unit.baseToUnit(this.value);
+                    return unit.baseValueToUnitValue(this.valueInBaseUnits);
                 },
             },
         ));
     }
 
-    export function base<const T extends string>(quantity: Quantity<T>): Measure<NoInfer<T>>
+    export function base<const T extends Dimension>(quantity: T): Measure<NoInfer<T>>
     {
         return custom<T>(
             quantity,
@@ -54,8 +64,8 @@ export namespace Measure
         );
     }
 
-    export function derived<const T extends string>(
-        quantity: Quantity<T>,
+    export function derived<const T extends Dimension>(
+        quantity: T,
         coefficient: number,
     ): Measure<NoInfer<T>>
     {

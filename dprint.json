@@ -1,7 +1,7 @@
 {
     "typescript": {
         "indentWidth": 4,
-        "lineWidth": 200,
+        "lineWidth": 100,
         "newLineKind": "lf",
         "useTabs": false,
 
